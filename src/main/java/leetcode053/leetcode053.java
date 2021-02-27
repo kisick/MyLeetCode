@@ -1,6 +1,5 @@
 package leetcode053;
 
-import sun.nio.cs.ext.MacThai;
 
 /**
  * @author: gefeng
