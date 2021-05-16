@@ -7,8 +7,8 @@ package leetcode021;
 public class leetcode021 {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        ListNode l1 = new ListNode();
-        ListNode l2 = new ListNode();
+        ListNode l1 = new ListNode(1, new ListNode(2, new ListNode(4)));
+        ListNode l2 = new ListNode(1, new ListNode(3, new ListNode(4)));
         ListNode result = solution.mergeTwoLists(l1,l2);
         while (result != null) {
             System.out.println(result.val);
@@ -31,6 +31,26 @@ class ListNode {
  */
 class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        return  l1;
+        // 双指针
+        ListNode result = new ListNode();
+        ListNode tail  = result;
+        while (l1!=null || l2!=null) {
+            if (l1 == null) {
+                tail.next = l2;
+                break;
+            } else if (l2 == null) {
+                tail.next = l1;
+                break;
+            }
+            if (l1.val<l2.val) {
+                tail.next = l1;
+                l1 = l1.next;
+            } else {
+                tail.next = l2;
+                l2 = l2.next;
+            }
+            tail = tail.next;
+        }
+        return  result.next;
     }
 }

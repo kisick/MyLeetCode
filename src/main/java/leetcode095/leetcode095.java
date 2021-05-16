@@ -1,6 +1,7 @@
 package leetcode095;
 
-import javax.swing.tree.TreeNode;
+import common.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -30,12 +31,5 @@ public class leetcode095 {
         return res;
     }
 
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
 }
 
