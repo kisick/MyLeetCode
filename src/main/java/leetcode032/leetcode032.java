@@ -1,10 +1,18 @@
 package leetcode032;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * @author: gefeng
  * @created: 2021/01/01 20:12
  */
 public class leetcode032 {
+    public static void main(String[] args) {
+        int i = new Solution().longestValidParentheses("(())");
+        System.out.printf(String.valueOf(i));
+    }
 }
 
 
@@ -24,20 +32,28 @@ public class leetcode032 {
  *  * 解释: 最长有效括号子串为 "()(())"
  */
 class Solution {
-    public static int longestValidParentheses(String s) {
-        // 1.状态 定义f[i][j] 表示i-j是一个有效括号
-        // 2.最终状态 f[i][j]
-        // 3.转移方程 如果f[i][j] 是一个有效括号，则f[i+1][j-1]也是一个有效括号
-        // f[i][j] = f[i]== '(' && f[j]==')' && f[i+1][j-1]
-        // 4.边界条件 f[0][0] = false
+    public  int longestValidParentheses(String s) {
         int res = 0;
-        boolean[][] dp = new boolean[s.length()+1][s.length()+1];
-        dp[0][0] = false;
-        for (int i = 1; i < s.length(); i++) {
-            for (int j = i+1; j < s.length(); j+=2) {
-                dp[i][j] = s.charAt(i)== '(' && s.charAt(j)==')' && dp[i+1][j-1];
+        Stack<Integer> stack = new Stack<>();
+        // 栈底始终维护，最后一个未匹配的 )
+        stack.push(-1);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                stack.pop();
+                if (stack.isEmpty()) {
+                    // 表示刚才弹出的那个数据，是) 而不是 (
+                    // 所以当前的 ) 没有匹配到 (
+                    // 需要开启下一次查找
+                    stack.push(i);
+                } else {
+                    // 当前的 ) 匹配到了 (
+                    // 有效长度为 当前位置-最开始的( 的前一个位置
+                    res = Math.max(res, i - stack.peek());
+                }
             }
         }
-        return 0;
+        return res;
     }
 }

@@ -7,7 +7,7 @@ package lcof_13;
 public class offer13 {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int m = 14, n = 14, k = 5;
+        int m = 11, n = 8, k = 16;
         System.out.println(solution.movingCount(m, n, k));
     }
 }

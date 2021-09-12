@@ -1,6 +1,7 @@
 package lcof_33;
 
 import java.net.Socket;
+import java.util.Arrays;
 
 /**
  * @author: gefeng
@@ -9,7 +10,7 @@ import java.net.Socket;
 public class offer33 {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] a = new int[]{5, 4, 3, 2, 1};
+        int[] a = new int[]{1,2,5,10,6,9,4,3};
         System.out.println(solution.verifyPostorder(a));
     }
 }
@@ -36,25 +37,28 @@ public class offer33 {
  */
 class Solution {
     public boolean verifyPostorder(int[] postorder) {
-        // 最后一个节点是根节点，遍历数组，找到最大的一个值，为最右端的一个节点
-        // 从0到最大的节点之间的数都小于根节点
-        // 从最大的节点到数组最后的数都大雨根节点
-        // 从前往后，找到大于root的第一个节点，以此节点为分界线
-        if (postorder == null || postorder.length == 0) {
-            return false;
+        // 递归出口当前节点为
+        if (postorder == null || postorder.length <= 1) {
+            return true;
         }
+        // 最后一个节点是根节点
         int root = postorder[postorder.length-1];
         int i = 0;
-
+        // 从前往后，找到大于root的第一个节点，以此节点为分界线
+        // 从0到最大的节点之间的数都小于根节点
+        // 从最大的节点到数组最后的数都大于根节点
         while (postorder[i] < root) {
             i++;
         }
-        int right_min = postorder[i];
-        for ( ; i < postorder.length - 1; i++) {
-            if (postorder[i] < root) {
+        for (int j = i ; j < postorder.length - 1; j++) {
+            if (postorder[j] < root) {
                 return false;
             }
         }
-        return true;
+        int[] left = new int[i];
+        int[] right = new int[postorder.length - i -1];
+        System.arraycopy(postorder, 0, left, 0, i);
+        System.arraycopy(postorder, i, right, 0, postorder.length - i - 1);
+        return verifyPostorder(left) && verifyPostorder(right);
     }
 }
