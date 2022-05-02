@@ -10,7 +10,7 @@ import java.util.List;
 public class leetcode046 {
     public static void main(String[] args) {
         int[] nums = new int[]{1,1,2,3};
-        List<List<Integer>> permute = new Solution().permute(nums);
+        List<List<Integer>> permute = new Solution().permute2(nums);
         permute.forEach(l -> {
             l.forEach(System.out::print);
             System.out.println("");
@@ -53,6 +53,30 @@ class Solution {
             }
         }
 
+    }
+
+    List<List<Integer>> ans2 = new ArrayList<>();
+    public List<List<Integer>> permute2(int[] nums) {
+        dfs2(nums, new ArrayList<Integer>());
+        return ans2;
+    }
+
+    public void dfs2(int[] nums, List<Integer> oneAns) {
+        if (oneAns.size() == nums.length) {
+            ans2.add(new ArrayList<>(oneAns));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == -100) {
+                continue;
+            }
+            oneAns.add(nums[i]);
+            int tmp = nums[i];
+            nums[i] = -100;
+            dfs2(nums, oneAns);
+            nums[i] = tmp;
+            oneAns.remove(oneAns.size()-1);
+        }
     }
 
 

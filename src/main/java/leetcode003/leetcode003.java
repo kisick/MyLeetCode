@@ -70,6 +70,23 @@ class Solution {
         }
         return max_length;
     }
+
+    public int lengthOfLongestSubstring2(String s) {
+        HashSet<Character> set = new HashSet<>();
+        int left = 0, right = 0;
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            while (set.contains(c)) {
+                left++;
+                set.remove(s.charAt(left-1));
+            }
+            set.add(c);
+            ans = Math.max(set.size(), ans);
+            right++;
+        }
+        return ans;
+    }
 }
 
 /**
